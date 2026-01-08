@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Toko Buku Vintage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b6f47;
+            --primary-dark: #6b5437;
+            --secondary: #d4b896;
+            --accent: #c17a4a;
+            --bg-light: #f9f6f0;
+            --bg-cream: #efe8dc;
+            --text-dark: #2d2416;
+            --text-medium: #5a4a3a;
+            --border: #cbb896;
+            --success: #4caf50;
+            --danger: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .checkout-header {
+            background: white;
+            border-bottom: 2px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-dark);
+            text-decoration: none;
+        }
+
+        .checkout-steps {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-medium);
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .step.active .step-number {
+            background: var(--accent);
+        }
+
+        .step.active {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .checkout-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        /* Cart Section */
+        .cart-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 20px;
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .cart-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.15);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .item-author {
+            color: var(--text-medium);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-cream);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .qty-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .qty-display {
+            font-size: 18px;
+            font-weight: 700;
+            min-width: 30px;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-family: 'Crimson Text', serif;
+            font-weight: 600;
+        }
+
+        .remove-btn:hover {
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .item-subtotal {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-top: 10px;
+        }
+
+        /* Shipping Section */
+        .shipping-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-top: 20px;
+        }
+
+        .shipping-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .shipping-option:hover {
+            border-color: var(--primary);
+        }
+
+        .shipping-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .shipping-option.selected {
+            border-color: var(--accent);
+            background: rgba(193, 122, 74, 0.05);
+        }
+
+        .shipping-info {
+            flex: 1;
+        }
+
+        .shipping-name {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+        }
+
+        .shipping-desc {
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .shipping-price {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: var(--text-medium);
+            font-size: 16px;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        .summary-total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--border);
+        }
+
+        .summary-total .summary-label {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .summary-total .summary-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .voucher-section {
+            margin: 20px 0;
+        }
+
+        .voucher-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .voucher-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Crimson Text', serif;
+            font-size: 16px;
+        }
+
+        .voucher-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .apply-btn {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Crimson Text', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(193, 122, 74, 0.3);
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 122, 74, 0.4);
+        }
+
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .empty-cart p {
+            color: var(--text-medium);
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .back-shop-btn {
+            padding: 15px 40px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .back-shop-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-section {
+                position: static;
+            }
+
+            .checkout-steps {
+                display: none;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+            }
+
+            .item-actions {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 15px;
+            }
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            text-align: center;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        .order-number {
+            font-size: 20px;
+            color: var(--accent);
+            font-weight: 700;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="checkout-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">📚 Vintage Books</a>
+            <div class="checkout-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <span>Keranjang</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <span>Pembayaran</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <span>Selesai</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="checkout-container" id="checkoutContainer">
+        <!-- Cart Items Section -->
+        <div>
+            <div class="cart-section">
+                <h2 class="section-title">🛒 Keranjang Belanja</h2>
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Shipping Section -->
+            <div class="shipping-section">
+                <h2 class="section-title">🚚 Metode Pengiriman</h2>
+                <div class="shipping-options">
+                    <label class="shipping-option selected" onclick="selectShipping(0)">
+                        <input type="radio" name="shipping" value="0" checked>
+                        <div class="shipping-info">
+                            <div class="shipping-name">Reguler (3-5 hari)</div>
+                            <div class="shipping-desc">Estimasi tiba 3-5 hari kerja</div>
+                        </div>
+                        <div class="shipping-price">Gratis</div>
+                    </label>
+                    <label class="shipping-option" onclick="selectShipping(15000)">
+                        <input type="radio" name="shipping" value="15000">
+                        <div class="shipping-info">
+                            <div class="shipping-name">Express (1-2 hari)</div>
+                            <div class="shipping-desc">Estimasi tiba 1-2 hari kerja</div>
+                        </div>
+                        <div class="shipping-price">Rp 15.000</div>
+                    </label>
+                    <label class="shipping-option" onclick="selectShipping(25000)">
+                        <input type="radio" name="shipping" value="25000">
+                        <div class="shipping-info">
+                            <div class="shipping-name">Same Day (Hari ini)</div>
+                            <div class="shipping-desc">Diterima hari yang sama</div>
+                        </div>
+                        <div class="shipping-price">Rp 25.000</div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="summary-section">
+            <h2 class="section-title">📋 Ringkasan Pesanan</h2>
+            
+            <div class="summary-row">
+                <span class="summary-label">Subtotal (<span id="totalItems">0</span> item)</span>
+                <span class="summary-value" id="subtotalPrice">Rp 0</span>
+            </div>
+            
+            <div class="summary-row">
+                <span class="summary-label">Ongkos Kirim</span>
+                <span class="summary-value" id="shippingPrice">Gratis</span>
+            </div>
+            
+            <div class="summary-row" id="discountRow" style="display: none;">
+                <span class="summary-label">Diskon Voucher</span>
+                <span class="summary-value" style="color: var(--success);" id="discountPrice">- Rp 0</span>
+            </div>
+
+            <div class="voucher-section">
+                <div class="voucher-input">
+                    <input type="text" id="voucherCode" placeholder="Masukkan kode voucher">
+                    <button class="apply-btn" onclick="applyVoucher()">Pakai</button>
+                </div>
+            </div>
+            
+            <div class="summary-row summary-total">
+                <span class="summary-label">Total Pembayaran</span>
+                <span class="summary-value" id="totalPrice">Rp 0</span>
+            </div>
+
+            <button class="checkout-btn" onclick="processCheckout()" id="checkoutBtn">
+                Proses Pembayaran
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">✅</div>
+            <h2>Pesanan Berhasil!</h2>
+            <p>Terima kasih telah berbelanja di Toko Buku Vintage Surabaya</p>
+            <div class="order-number">Order #<span id="orderNumber"></span></div>
+            <p style="color: var(--text-medium); margin-bottom: 25px;">
+                Kami akan mengirimkan konfirmasi ke email Anda
+            </p>
+            <button class="checkout-btn" onclick="window.location.href='index.html'">
+                Kembali ke Beranda
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let shippingCost = 0;
+        let discount = 0;
+        let vouchers = {
+            'VINTAGE10': { type: 'percent', value: 10, minPurchase: 100000 },
+            'GRATIS20': { type: 'fixed', value: 20000, minPurchase: 150000 },
+            'NEWUSER': { type: 'percent', value: 15, minPurchase: 0 }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            updateSummary();
+        });
+
+        // Load cart items
+        function loadCart() {
+            const container = document.getElementById('cartItems');
+            const checkoutContainer = document.getElementById('checkoutContainer');
+
+            if (cart.length === 0) {
+                checkoutContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-icon">🛒</div>
+                        <h2>Keranjang Belanja Kosong</h2>
+                        <p>Belum ada buku yang ditambahkan ke keranjang</p>
+                        <a href="index.html" class="back-shop-btn">Mulai Belanja</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.title}" class="item-image">
+                    <div class="item-info">
+                        <div class="item-title">${item.title}</div>
+                        <div class="item-author">oleh ${item.author}</div>
+                        <div class="item-price">Rp ${item.price.toLocaleString('id-ID')}</div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="quantity-control">
+                            <button class="qty-btn" onclick="changeQuantity(${index}, -1)" ${item.quantity <= 1 ? 'disabled' : ''}>
+                                −
+                            </button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn" onclick="changeQuantity(${index}, 1)" ${item.quantity >= 10 ? 'disabled' : ''}>
+                                +
+                            </button>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${index})">
+                            🗑️ Hapus
+                        </button>
+                        <div class="item-subtotal">
+                            Rp ${(item.price * item.quantity).toLocaleString('id-ID')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Change quantity
+        function changeQuantity(index, change) {
+            cart[index].quantity += change;
+            
+            if (cart[index].quantity < 1) {
+                cart[index].quantity = 1;
+            }
+            if (cart[index].quantity > 10) {
+                cart[index].quantity = 10;
+            }
+
+            saveCart();
+            loadCart();
+            updateSummary();
+            showNotification(`Jumlah diperbarui: ${cart[index].quantity} item`);
+        }
+
+        // Remove item
+        function removeItem(index) {
+            const itemName = cart[index].title;
+            if (confirm(`Hapus "${itemName}" dari keranjang?`)) {
+                cart.splice(index, 1);
+                saveCart();
+                loadCart();
+                updateSummary();
+                showNotification(`"${itemName}" dihapus dari keranjang`);
+            }
+        }
+
+        // Select shipping
+        function selectShipping(cost) {
+            shippingCost = cost;
+            
+            // Update UI
+            document.querySelectorAll('.shipping-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            updateSummary();
+        }
+
+        // Apply voucher
+        function applyVoucher() {
+            const code = document.getElementById('voucherCode').value.toUpperCase().trim();
+            
+            if (!code) {
+                alert('Masukkan kode voucher!');
+                return;
+            }
+
+            const voucher = vouchers[code];
+            if (!voucher) {
+                alert('Kode voucher tidak valid!');
+                return;
+            }
+
+            const subtotal = calculateSubtotal();
+            if (subtotal < voucher.minPurchase) {
+                alert(`Minimal pembelian Rp ${voucher.minPurchase.toLocaleString('id-ID')} untuk voucher ini`);
+                return;
+            }
+
+            // Calculate discount
+            if (voucher.type === 'percent') {
+                discount = Math.floor(subtotal * voucher.value / 100);
+            } else {
+                discount = voucher.value;
+            }
+
+            document.getElementById('discountRow').style.display = 'flex';
+            updateSummary();
+            showNotification(`Voucher ${code} berhasil dipakai! Diskon Rp ${discount.toLocaleString('id-ID')}`);
+        }
+
+        // Calculate subtotal
+        function calculateSubtotal() {
+            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        }
+
+        // Update summary
+        function updateSummary() {
+            const subtotal = calculateSubtotal();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const total = subtotal + shippingCost - discount;
+
+            document.getElementById('totalItems').textContent = totalItems;
+            document.getElementById('subtotalPrice').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            document.getElementById('shippingPrice').textContent = shippingCost === 0 ? 'Gratis' : `Rp ${shippingCost.toLocaleString('id-ID')}`;
+            document.getElementById('discountPrice').textContent = `- Rp ${discount.toLocaleString('id-ID')}`;
+            document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+
+            // Enable/disable checkout button
+            document.getElementById('checkoutBtn').disabled = cart.length === 0;
+        }
+
+        // Process checkout
+        function processCheckout() {
+            if (cart.length === 0) {
+                alert('Keranjang masih kosong!');
+                return;
+            }
+
+            // Generate order number
+            const orderNumber = 'VB' + Date.now().toString().slice(-8);
+            document.getElementById('orderNumber').textContent = orderNumber;
+
+            // Show success modal
+            document.getElementById('successModal').style.display = 'flex';
+
+            // Clear cart
+            cart = [];
+            saveCart();
+
+            // Update cart count in main page
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Save cart
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 30px;
+                background: var(--primary-dark);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                z-index: 1001;
+                animation: slideInRight 0.3s;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Add animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

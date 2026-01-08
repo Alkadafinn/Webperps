@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya - Toko Buku Vintage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b6f47;
+            --primary-dark: #6b5437;
+            --secondary: #d4b896;
+            --accent: #c17a4a;
+            --bg-light: #f9f6f0;
+            --bg-cream: #efe8dc;
+            --text-dark: #2d2416;
+            --text-medium: #5a4a3a;
+            --border: #cbb896;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--bg-cream) 100%);
+            padding: 20px 30px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-dark);
+            text-decoration: none;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Profile Container */
+        .profile-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .profile-header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+
+        .profile-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+
+        .profile-email {
+            color: var(--text-medium);
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tabs */
+        .profile-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-dark);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Purchase History */
+        .purchase-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .purchase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .purchase-date {
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+
+        .purchase-status {
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-processing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .purchase-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .purchase-item {
+            display: flex;
+            gap: 15px;
+        }
+
+        .purchase-item img {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .purchase-item-info {
+            flex: 1;
+        }
+
+        .purchase-item-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .purchase-item-author {
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+
+        .purchase-total {
+            text-align: right;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Favorites Grid */
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .favorite-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .favorite-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .favorite-card-content {
+            padding: 15px;
+        }
+
+        .favorite-card-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .favorite-card-author {
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-medium);
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Account Settings */
+        .settings-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            max-width: 600px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Crimson Text', serif;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Crimson Text', serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .profile-tabs {
+                overflow-x: auto;
+            }
+
+            .purchase-item {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo">📚 Vintage Books</a>
+        <a href="index.html" class="back-btn">← Kembali ke Toko</a>
+    </header>
+
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <div class="profile-info">
+                <h1 id="userName">John Doe</h1>
+                <p class="profile-email" id="userEmail">john.doe@example.com</p>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="purchaseCount">12</div>
+                        <div class="stat-label">Pembelian</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="favoriteCount">8</div>
+                        <div class="stat-label">Favorit</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2023</div>
+                        <div class="stat-label">Member Sejak</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="profile-tabs">
+            <button class="tab-btn active" onclick="switchTab('history')">📜 Riwayat Pembelian</button>
+            <button class="tab-btn" onclick="switchTab('favorites')">❤️ Buku Favorit</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ Pengaturan Akun</button>
+        </div>
+
+        <!-- Purchase History Tab -->
+        <div class="tab-content active" id="historyTab">
+            <div class="purchase-card">
+                <div class="purchase-header">
+                    <div>
+                        <strong>Order #12345</strong>
+                        <div class="purchase-date">15 Desember 2025</div>
+                    </div>
+                    <span class="purchase-status status-completed">Selesai</span>
+                </div>
+                <div class="purchase-items">
+                    <div class="purchase-item">
+                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400" alt="Book">
+                        <div class="purchase-item-info">
+                            <div class="purchase-item-title">Dilan 1990</div>
+                            <div class="purchase-item-author">oleh Pidi Baiq</div>
+                            <div style="margin-top: 8px; color: var(--text-medium);">1x - Rp 85.000</div>
+                        </div>
+                    </div>
+                    <div class="purchase-item">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400" alt="Book">
+                        <div class="purchase-item-info">
+                            <div class="purchase-item-title">Twenty Thousand Leagues Under the Sea</div>
+                            <div class="purchase-item-author">oleh Jules Verne</div>
+                            <div style="margin-top: 8px; color: var(--text-medium);">1x - Rp 150.000</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="purchase-total">
+                    Total: Rp 235.000
+                </div>
+            </div>
+
+            <div class="purchase-card">
+                <div class="purchase-header">
+                    <div>
+                        <strong>Order #12344</strong>
+                        <div class="purchase-date">10 Desember 2025</div>
+                    </div>
+                    <span class="purchase-status status-processing">Proses</span>
+                </div>
+                <div class="purchase-items">
+                    <div class="purchase-item">
+                        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400" alt="Book">
+                        <div class="purchase-item-info">
+                            <div class="purchase-item-title">Meditations</div>
+                            <div class="purchase-item-author">oleh Marcus Aurelius</div>
+                            <div style="margin-top: 8px; color: var(--text-medium);">1x - Rp 195.000</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="purchase-total">
+                    Total: Rp 195.000
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorites Tab -->
+        <div class="tab-content" id="favoritesTab">
+            <div class="favorites-grid" id="favoritesGrid">
+                <!-- Favorites will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="tab-content" id="settingsTab">
+            <div class="settings-form">
+                <h2 style="margin-bottom: 25px; color: var(--primary-dark);">Informasi Akun</h2>
+                <form onsubmit="saveSettings(event)">
+                    <div class="form-group">
+                        <label for="settingsName">Nama Lengkap</label>
+                        <input type="text" id="settingsName" value="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsEmail">Email</label>
+                        <input type="email" id="settingsEmail" value="john.doe@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsPhone">Nomor Telepon</label>
+                        <input type="tel" id="settingsPhone" value="0812-3456-7890">
+                    </div>
+                    <div class="form-group">
+                        <label for="settingsAddress">Alamat</label>
+                        <input type="text" id="settingsAddress" value="Jl. Example No. 123, Surabaya">
+                    </div>
+                    <button type="submit" class="btn">Simpan Perubahan</button>
+                </form>
+
+                <h2 style="margin: 40px 0 25px; color: var(--primary-dark);">Ubah Password</h2>
+                <form onsubmit="changePassword(event)">
+                    <div class="form-group">
+                        <label for="currentPassword">Password Saat Ini</label>
+                        <input type="password" id="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Password Baru</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Konfirmasi Password Baru</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn">Ubah Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load user data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadFavorites();
+        });
+
+        function loadUserData() {
+            const registeredUser = localStorage.getItem('registeredUser');
+            if (registeredUser) {
+                const user = JSON.parse(registeredUser);
+                document.getElementById('userName').textContent = user.fullname;
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('settingsName').value = user.fullname;
+                document.getElementById('settingsEmail').value = user.email;
+                if (user.phone) {
+                    document.getElementById('settingsPhone').value = user.phone;
+                }
+            }
+
+            // Update counts
+            const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            document.getElementById('favoriteCount').textContent = wishlist.length;
+        }
+
+        function loadFavorites() {
+            const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            const grid = document.getElementById('favoritesGrid');
+
+            if (wishlist.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state-icon">📚</div>
+                        <h3>Belum Ada Buku Favorit</h3>
+                        <p>Mulai tambahkan buku ke favorit Anda untuk melihatnya di sini</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = wishlist.map(book => `
+                <div class="favorite-card" onclick="window.location.href='index.html#book-${book.id}'">
+                    <img src="${book.image}" alt="${book.title}">
+                    <div class="favorite-card-content">
+                        <div class="favorite-card-title">${book.title}</div>
+                        <div class="favorite-card-author">${book.author}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        function saveSettings(event) {
+            event.preventDefault();
+            const name = document.getElementById('settingsName').value;
+            const email = document.getElementById('settingsEmail').value;
+            const phone = document.getElementById('settingsPhone').value;
+            const address = document.getElementById('settingsAddress').value;
+
+            // Update localStorage
+            const userData = {
+                fullname: name,
+                email: email,
+                phone: phone,
+                address: address
+            };
+            localStorage.setItem('registeredUser', JSON.stringify(userData));
+
+            // Update display
+            document.getElementById('userName').textContent = name;
+            document.getElementById('userEmail').textContent = email;
+
+            alert('Perubahan berhasil disimpan!');
+        }
+
+        function changePassword(event) {
+            event.preventDefault();
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+
+            if (newPass !== confirmPass) {
+                alert('Password baru dan konfirmasi tidak cocok!');
+                return;
+            }
+
+            if (newPass.length < 6) {
+                alert('Password harus minimal 6 karakter!');
+                return;
+            }
+
+            alert('Password berhasil diubah!');
+            event.target.reset();
+        }
+    </script>
+</body>
+
+</html>

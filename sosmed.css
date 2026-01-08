@@ -1,0 +1,218 @@
+/* ========================================
+   SOCIAL MEDIA FLOATING MENU - SIMPLE VERSION
+   8 Platforms (WhatsApp sudah ada popup sendiri)
+   ======================================== */
+
+/* Main Floating Button */
+.social-float-main {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    z-index: 10000;
+    transition: transform 0.2s ease;
+}
+
+.social-float-main:hover {
+    transform: scale(1.1);
+}
+
+.social-float-main.active {
+    transform: rotate(45deg);
+}
+
+.social-main-icon {
+    font-size: 28px;
+    color: white;
+    transition: transform 0.2s ease;
+}
+
+.social-float-main.active .social-main-icon {
+    transform: rotate(-45deg);
+}
+
+/* Social Media Items Container */
+.social-items {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 9999;
+}
+
+/* Individual Social Item - SIMPLE */
+.social-item {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.social-items.active .social-item {
+    display: flex;
+}
+
+.social-item:hover {
+    transform: scale(1.15);
+}
+
+.social-item span {
+    font-size: 24px;
+    color: white;
+}
+
+/* Instagram - Position 1 */
+.social-item.instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    bottom: 70px;
+    left: 0;
+}
+
+/* Facebook - Position 2 */
+.social-item.facebook {
+    background: linear-gradient(135deg, #1877f2 0%, #0d5fbe 100%);
+    bottom: 130px;
+    left: 0;
+}
+
+/* Twitter - Position 3 */
+.social-item.twitter {
+    background: linear-gradient(135deg, #000000 0%, #000000 100%);
+    bottom: 190px;
+    left: 0;
+}
+
+/* TikTok - Position 4 */
+.social-item.tiktok {
+    background: linear-gradient(135deg, #000000 0%, #69C9D0 50%, #EE1D52 100%);
+    bottom: 250px;
+    left: 0;
+}
+
+/* YouTube - Position 5 */
+.social-item.youtube {
+    background: linear-gradient(135deg, #FF0000 0%, #cc0000 100%);
+    bottom: 310px;
+    left: 0;
+}
+
+/* Telegram - Position 6 */
+.social-item.telegram {
+    background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+    bottom: 370px;
+    left: 0;
+}
+
+/* Email - Position 7 */
+.social-item.email {
+    background: linear-gradient(135deg, #EA4335 0%, #c5371d 100%);
+    bottom: 430px;
+    left: 0;
+}
+
+/* LinkedIn - Position 8 */
+.social-item.linkedin {
+    background: linear-gradient(135deg, #0077b5 0%, #005582 100%);
+    bottom: 490px;
+    left: 0;
+}
+
+/* Tooltip Label */
+.social-label {
+    position: absolute;
+    left: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.social-item:hover .social-label {
+    opacity: 1;
+}
+
+/* Background Overlay */
+.social-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 9998;
+}
+
+.social-overlay.active {
+    display: block;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .social-float-main {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        left: 20px;
+    }
+    
+    .social-main-icon {
+        font-size: 24px;
+    }
+    
+    .social-item {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .social-item span {
+        font-size: 20px;
+    }
+    
+    .social-item.instagram { bottom: 60px; }
+    .social-item.facebook { bottom: 115px; }
+    .social-item.twitter { bottom: 170px; }
+    .social-item.tiktok { bottom: 225px; }
+    .social-item.youtube { bottom: 280px; }
+    .social-item.telegram { bottom: 335px; }
+    .social-item.email { bottom: 390px; }
+    .social-item.linkedin { bottom: 445px; }
+    
+    .social-label {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-float-main {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .social-item {
+        width: 40px;
+        height: 40px;
+    }
+}

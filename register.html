@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Toko Buku Vintage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: linear-gradient(135deg, #f4e9d8 0%, #e8d5b7 100%);
+            color: #3a2f22;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: #efe2c6;
+            border: 3px solid #b59b72;
+            border-radius: 15px;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            width: 100%;
+            padding: 40px 35px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .register-header h1 {
+            font-size: 36px;
+            color: #3a2f22;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px #d4c4a8;
+        }
+
+        .register-header p {
+            color: #6b5d4f;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #3a2f22;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #b59b72;
+            border-radius: 8px;
+            background: #fff9f0;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            color: #3a2f22;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #8b7355;
+            box-shadow: 0 0 8px rgba(139, 115, 85, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: #a18963;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: #3a2f22;
+            cursor: pointer;
+        }
+
+        .checkbox-group label a {
+            color: #8b7355;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .checkbox-group label a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #b59b72 0%, #9c8668 100%);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Georgia, serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-register:hover {
+            background: linear-gradient(135deg, #9c8668 0%, #8b7355 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-register:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #b59b72;
+        }
+
+        .divider span {
+            background: #efe2c6;
+            padding: 0 15px;
+            position: relative;
+            color: #6b5d4f;
+            font-size: 14px;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6b5d4f;
+        }
+
+        .login-link a {
+            color: #8b7355;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-home a {
+            color: #8b7355;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-home a:hover {
+            text-decoration: underline;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Login Popup */
+        #loginPopup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadein 0.4s ease forwards;
+        }
+
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .login-popup-content {
+            background: #efe2c6;
+            padding: 25px;
+            width: 320px;
+            border-radius: 10px;
+            border: 2px solid #b59b72;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            animation: slideInPopup 0.4s ease forwards;
+        }
+
+        @keyframes slideInPopup {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close-login {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #3a2f22;
+        }
+
+        .close-login:hover {
+            color: #8b7355;
+        }
+
+        .login-popup-content h3 {
+            margin-bottom: 20px;
+            color: #3a2f22;
+        }
+
+        .login-popup-content input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #8b7355;
+            border-radius: 8px;
+            background: #fff9f0;
+            font-family: Georgia, serif;
+        }
+
+        .login-popup-content button.btn-login {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background: #b59b72;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+            font-family: Georgia, serif;
+            transition: all 0.3s;
+        }
+
+        .login-popup-content button.btn-login:hover {
+            background: #9c8668;
+        }
+
+        /* Terms and Conditions Modal */
+        #termsModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadein 0.4s ease forwards;
+        }
+
+        .terms-modal-content {
+            background: #efe2c6;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            border-radius: 12px;
+            border: 3px solid #b59b72;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideInPopup 0.4s ease forwards;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terms-modal-header {
+            padding: 25px 30px;
+            border-bottom: 2px solid #b59b72;
+            position: relative;
+        }
+
+        .terms-modal-header h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 28px;
+            color: #3a2f22;
+            margin: 0;
+        }
+
+        .terms-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #b59b72;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .terms-modal-close:hover {
+            background: #9c8668;
+            transform: rotate(90deg);
+        }
+
+        .terms-modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .terms-modal-body h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 20px;
+            color: #3a2f22;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .terms-modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .terms-modal-body p {
+            line-height: 1.8;
+            color: #5a4a3a;
+            margin-bottom: 15px;
+        }
+
+        .terms-modal-body ul,
+        .terms-modal-body ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .terms-modal-body li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: #5a4a3a;
+        }
+
+        .terms-modal-footer {
+            padding: 20px 30px;
+            border-top: 2px solid #b59b72;
+            text-align: center;
+        }
+
+        .btn-accept-terms {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #b59b72 0%, #9c8668 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Georgia, serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-accept-terms:hover {
+            background: linear-gradient(135deg, #9c8668 0%, #8b7355 100%);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 480px) {
+            .login-popup-content {
+                width: 90%;
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>📚 Register</h1>
+            <p>Bergabunglah dengan Toko Buku Vintage Surabaya</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            Pendaftaran berhasil! Silakan login.
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            Mohon lengkapi semua field yang diperlukan.
+        </div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="fullname">Nama Lengkap *</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Masukkan nama lengkap" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username *</label>
+                <input type="text" id="username" name="username" placeholder="Pilih username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" placeholder="contoh@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Nomor Telepon</label>
+                <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxxxx">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" id="password" name="password" placeholder="Minimal 6 karakter" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Konfirmasi Password *</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Ulangi password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Jenis Kelamin</label>
+                <select id="gender" name="gender">
+                    <option value="">Pilih jenis kelamin</option>
+                    <option value="male">Laki-laki</option>
+                    <option value="female">Perempuan</option>
+                    <option value="other">Lainnya</option>
+                </select>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">
+                    Saya setuju dengan <a href="#" onclick="openTermsModal(); return false;">Syarat & Ketentuan</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn-register">Daftar Sekarang</button>
+        </form>
+
+        <div class="divider">
+            <span>atau</span>
+        </div>
+
+        <div class="login-link">
+            Sudah punya akun? <a onclick="openLoginPopup()">Login di sini</a>
+        </div>
+
+        <div class="back-home">
+            <a href="index.html">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <!-- TERMS AND CONDITIONS MODAL -->
+    <div id="termsModal">
+        <div class="terms-modal-content">
+            <div class="terms-modal-header">
+                <h2>📜 Syarat & Ketentuan</h2>
+                <button class="terms-modal-close" onclick="closeTermsModal()">×</button>
+            </div>
+            <div class="terms-modal-body">
+                <!-- ISI SYARAT & KETENTUAN DI SINI -->
+                <!-- Anda bisa edit konten di bawah ini sesuai kebutuhan -->
+                
+                <h3>1. Ketentuan Umum</h3>
+                <p>
+                    Dengan mengakses dan menggunakan website Toko Buku Vintage Surabaya, Anda setuju untuk terikat 
+                    dengan syarat dan ketentuan yang berlaku. Jika Anda tidak setuju dengan syarat dan ketentuan ini, 
+                    mohon untuk tidak menggunakan layanan kami.
+                </p>
+
+                <h3>2. Pendaftaran Akun</h3>
+                <ul>
+                    <li>Anda harus berusia minimal 17 tahun untuk mendaftar</li>
+                    <li>Informasi yang diberikan harus akurat dan lengkap</li>
+                    <li>Anda bertanggung jawab menjaga keamanan password</li>
+                    <li>Satu orang hanya boleh memiliki satu akun</li>
+                    <li>Kami berhak menangguhkan akun yang melanggar ketentuan</li>
+                </ul>
+
+                <h3>3. Pembelian dan Pembayaran</h3>
+                <p>
+                    Semua transaksi pembelian buku melalui website kami bersifat final. Harga yang tertera sudah 
+                    termasuk pajak yang berlaku. Pembayaran dapat dilakukan melalui metode yang tersedia di sistem kami.
+                </p>
+                <ul>
+                    <li>Harga dapat berubah sewaktu-waktu tanpa pemberitahuan</li>
+                    <li>Ketersediaan stok buku dapat berubah</li>
+                    <li>Konfirmasi pembelian akan dikirim via email</li>
+                    <li>Pembayaran harus diselesaikan dalam 24 jam</li>
+                </ul>
+
+                <h3>4. Pengiriman</h3>
+                <p>
+                    Estimasi waktu pengiriman adalah 3-7 hari kerja untuk area Jawa Timur, dan 5-14 hari kerja 
+                    untuk area luar Jawa Timur. Keterlambatan pengiriman di luar kendali kami bukan merupakan 
+                    tanggung jawab Toko Buku Vintage Surabaya.
+                </p>
+
+                <h3>5. Pengembalian dan Penukaran</h3>
+                <ul>
+                    <li>Buku dapat dikembalikan dalam 7 hari jika ada kerusakan dari pabrik</li>
+                    <li>Buku harus dalam kondisi yang sama seperti saat diterima</li>
+                    <li>Biaya pengiriman pengembalian ditanggung pembeli</li>
+                    <li>Pengembalian harus disertai bukti pembelian</li>
+                    <li>Buku vintage/langka tidak dapat dikembalikan</li>
+                </ul>
+
+                <h3>6. Privasi dan Data Pribadi</h3>
+                <p>
+                    Kami menghormati privasi Anda dan berkomitmen untuk melindungi data pribadi Anda. Informasi 
+                    yang dikumpulkan akan digunakan untuk:
+                </p>
+                <ul>
+                    <li>Memproses pesanan dan transaksi</li>
+                    <li>Mengirimkan notifikasi terkait pesanan</li>
+                    <li>Meningkatkan layanan kami</li>
+                    <li>Mengirim newsletter (jika Anda berlangganan)</li>
+                </ul>
+
+                <h3>7. Hak Cipta dan Konten</h3>
+                <p>
+                    Seluruh konten di website ini, termasuk teks, gambar, logo, dan desain adalah milik 
+                    Toko Buku Vintage Surabaya dan dilindungi oleh hukum hak cipta. Penggunaan tanpa izin 
+                    adalah pelanggaran hukum.
+                </p>
+
+                <h3>8. Larangan</h3>
+                <p>Anda dilarang untuk:</p>
+                <ol>
+                    <li>Menggunakan website untuk tujuan ilegal</li>
+                    <li>Menyebarkan virus atau malware</li>
+                    <li>Mencoba mengakses sistem tanpa izin</li>
+                    <li>Menggunakan bot atau otomasi tanpa izin</li>
+                    <li>Menyalahgunakan fitur review dan rating</li>
+                </ol>
+
+                <h3>9. Perubahan Syarat & Ketentuan</h3>
+                <p>
+                    Kami berhak mengubah syarat dan ketentuan ini sewaktu-waktu. Perubahan akan berlaku sejak 
+                    dipublikasikan di website. Penggunaan website setelah perubahan berarti Anda menyetujui 
+                    perubahan tersebut.
+                </p>
+
+                <h3>10. Kontak</h3>
+                <p>
+                    Jika Anda memiliki pertanyaan tentang syarat dan ketentuan ini, silakan hubungi kami di:
+                </p>
+                <ul>
+                    <li>Email: info@vintagebooks-sby.com</li>
+                    <li>Telepon: (031) 555-1234</li>
+                    <li>Alamat: Jl. Tunjungan No. 45, Genteng, Surabaya</li>
+                </ul>
+
+                <p style="margin-top: 30px; font-style: italic; color: #6b5d4f;">
+                    Terakhir diperbarui: 16 Desember 2025
+                </p>
+
+                <!-- AKHIR ISI SYARAT & KETENTUAN -->
+            </div>
+            <div class="terms-modal-footer">
+                <button class="btn-accept-terms" onclick="acceptTerms()">
+                    Saya Mengerti & Setuju
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN POPUP -->
+    <div id="loginPopup">
+        <div class="login-popup-content">
+            <button class="close-login" onclick="closeLoginPopup()">&times;</button>
+            <h3>Login</h3>
+            <input type="text" placeholder="Username" id="loginUsername" />
+            <input type="password" placeholder="Password" id="loginPassword" />
+            <button class="btn-login" onclick="handleLogin()">Masuk</button>
+        </div>
+    </div>
+
+    <script>
+        // Open Login Popup
+        function openLoginPopup() {
+            document.getElementById('loginPopup').style.display = 'flex';
+        }
+
+        // Close Login Popup
+        function closeLoginPopup() {
+            document.getElementById('loginPopup').style.display = 'none';
+        }
+
+        // Handle Login
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                alert('Mohon isi username dan password!');
+                return;
+            }
+
+            // Demo: Check if user registered
+            const registeredUser = localStorage.getItem('registeredUser');
+            if (registeredUser) {
+                const user = JSON.parse(registeredUser);
+                alert('Login berhasil! Selamat datang, ' + user.fullname);
+                window.location.href = 'index.html';
+            } else {
+                alert('Login berhasil! Selamat datang, ' + username);
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('loginPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginPopup();
+            }
+        });
+
+        // Register Form Submit
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form values
+            const fullname = document.getElementById('fullname').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Hide messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Validation
+            if (!fullname || !username || !email || !password || !confirmPassword) {
+                errorMessage.textContent = 'Mohon lengkapi semua field yang diperlukan.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorMessage.textContent = 'Password harus minimal 6 karakter.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Password dan konfirmasi password tidak cocok.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (!terms) {
+                errorMessage.textContent = 'Anda harus menyetujui Syarat & Ketentuan.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage.textContent = 'Format email tidak valid.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // If all validations pass
+            successMessage.style.display = 'block';
+            
+            // Store user data in localStorage (for demo purposes)
+            const userData = {
+                fullname: fullname,
+                username: username,
+                email: email,
+                phone: document.getElementById('phone').value,
+                gender: document.getElementById('gender').value
+            };
+            localStorage.setItem('registeredUser', JSON.stringify(userData));
+
+            // Reset form
+            document.getElementById('registerForm').reset();
+
+            // Redirect to login after 2 seconds
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 2000);
+        });
+
+        // Real-time password match validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#dc3545';
+            } else {
+                this.style.borderColor = '#b59b72';
+            }
+        });
+
+        // Terms and Conditions Modal Functions
+        function openTermsModal() {
+            document.getElementById('termsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTermsModal() {
+            document.getElementById('termsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function acceptTerms() {
+            // Check the terms checkbox
+            document.getElementById('terms').checked = true;
+            closeTermsModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('termsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeTermsModal();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

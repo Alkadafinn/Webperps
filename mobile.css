@@ -1,0 +1,992 @@
+/* ========================================
+   MOBILE INTERACTIVE & ANIMATED CSS
+   Super Smooth, Lots of Animations!
+   ======================================== */
+
+/* Base Mobile Optimizations */
+@media (max-width: 968px) {
+    
+    /* ============================================
+       SMOOTH SCROLLING & TOUCH OPTIMIZATION
+       ============================================ */
+    * {
+        -webkit-tap-highlight-color: rgba(139, 111, 71, 0.2);
+        -webkit-touch-callout: none;
+        touch-action: manipulation;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body {
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    /* ============================================
+       ANIMATED HEADER - Slide Down on Load
+       ============================================ */
+    header {
+        animation: slideDownBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    @keyframes slideDownBounce {
+        0% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        60% {
+            transform: translateY(10px);
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* ============================================
+       ANIMATED LOGO - Rotate & Scale on Load
+       ============================================ */
+    .logo {
+        animation: logoEntrance 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s backwards;
+    }
+
+    @keyframes logoEntrance {
+        0% {
+            transform: scale(0) rotate(-180deg);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.2) rotate(20deg);
+        }
+        100% {
+            transform: scale(1) rotate(0);
+            opacity: 1;
+        }
+    }
+
+    /* ============================================
+       SEARCH BAR - Glow Effect & Expand Animation
+       ============================================ */
+    .search-container {
+        max-width: 100%;
+        animation: expandIn 0.6s ease-out 0.5s backwards;
+    }
+
+    @keyframes expandIn {
+        from {
+            transform: scaleX(0);
+            opacity: 0;
+        }
+        to {
+            transform: scaleX(1);
+            opacity: 1;
+        }
+    }
+
+    .search-bar {
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .search-bar:focus {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(193, 122, 74, 0.5),
+                    0 0 40px rgba(193, 122, 74, 0.3),
+                    0 0 60px rgba(193, 122, 74, 0.1);
+        animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(193, 122, 74, 0.5);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(193, 122, 74, 0.8);
+        }
+    }
+
+    /* ============================================
+       HEADER ICONS - Pop & Bounce Animation
+       ============================================ */
+    .header-icons {
+        gap: 15px;
+    }
+
+    .icon-btn {
+        animation: iconPop 0.5s ease-out backwards;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        position: relative;
+    }
+
+    .icon-btn:nth-child(1) { animation-delay: 0.6s; }
+    .icon-btn:nth-child(2) { animation-delay: 0.7s; }
+    .icon-btn:nth-child(3) { animation-delay: 0.8s; }
+
+    @keyframes iconPop {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.3);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .icon-btn:active {
+        transform: scale(0.8);
+        animation: ripple 0.6s ease-out;
+    }
+
+    @keyframes ripple {
+        0% {
+            box-shadow: 0 0 0 0 rgba(193, 122, 74, 0.7);
+        }
+        100% {
+            box-shadow: 0 0 0 40px rgba(193, 122, 74, 0);
+        }
+    }
+
+    /* Cart Badge Bounce */
+    .cart-badge {
+        animation: badgeBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes badgeBounce {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.3) rotate(10deg);
+        }
+    }
+
+    /* ============================================
+       MOBILE NAVIGATION - Slide & Fade
+       ============================================ */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        flex-direction: column;
+        padding: 80px 0 20px;
+        transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        left: 0;
+        animation: menuSlideIn 0.4s ease-out;
+    }
+
+    @keyframes menuSlideIn {
+        0% {
+            left: -100%;
+            opacity: 0;
+        }
+        100% {
+            left: 0;
+            opacity: 1;
+        }
+    }
+
+    .nav-links a {
+        padding: 20px 30px;
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    .nav-links.active a {
+        animation: navItemSlide 0.5s ease-out forwards;
+    }
+
+    .nav-links.active a:nth-child(1) { animation-delay: 0.1s; }
+    .nav-links.active a:nth-child(2) { animation-delay: 0.2s; }
+    .nav-links.active a:nth-child(3) { animation-delay: 0.3s; }
+    .nav-links.active a:nth-child(4) { animation-delay: 0.4s; }
+    .nav-links.active a:nth-child(5) { animation-delay: 0.5s; }
+    .nav-links.active a:nth-child(6) { animation-delay: 0.6s; }
+    .nav-links.active a:nth-child(7) { animation-delay: 0.7s; }
+    .nav-links.active a:nth-child(8) { animation-delay: 0.8s; }
+
+    @keyframes navItemSlide {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .nav-links a:active {
+        transform: scale(0.95);
+        background: var(--primary-dark);
+    }
+
+    /* Hamburger Menu Animation */
+    .mobile-menu-btn {
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .mobile-menu-btn:active {
+        transform: rotate(90deg) scale(1.2);
+    }
+
+    /* Overlay for Menu */
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        backdrop-filter: blur(5px);
+    }
+
+    .nav-overlay.active {
+        display: block;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* ============================================
+       FILTER BUTTONS - Slide & Wave Animation
+       ============================================ */
+    .filter-container {
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding: 15px;
+        scrollbar-width: none;
+    }
+
+    .filter-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .filter-btn {
+        animation: filterSlideIn 0.5s ease-out backwards;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        white-space: nowrap;
+    }
+
+    .filter-btn:nth-child(1) { animation-delay: 0.1s; }
+    .filter-btn:nth-child(2) { animation-delay: 0.15s; }
+    .filter-btn:nth-child(3) { animation-delay: 0.2s; }
+    .filter-btn:nth-child(4) { animation-delay: 0.25s; }
+    .filter-btn:nth-child(5) { animation-delay: 0.3s; }
+    .filter-btn:nth-child(6) { animation-delay: 0.35s; }
+    .filter-btn:nth-child(7) { animation-delay: 0.4s; }
+    .filter-btn:nth-child(8) { animation-delay: 0.45s; }
+
+    @keyframes filterSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .filter-btn:active {
+        transform: scale(0.9);
+        animation: pulse 0.3s ease-out;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(193, 122, 74, 0.7);
+        }
+        100% {
+            box-shadow: 0 0 0 30px rgba(193, 122, 74, 0);
+        }
+    }
+
+    /* ============================================
+       HERO SECTION - Floating Animation
+       ============================================ */
+    .hero {
+        padding: 40px 20px;
+        animation: heroFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    .hero h1 {
+        font-size: 32px;
+        animation: textGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes textGlow {
+        from {
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+        }
+        to {
+            text-shadow: 2px 2px 20px rgba(193, 122, 74, 0.6),
+                         2px 2px 30px rgba(193, 122, 74, 0.4);
+        }
+    }
+
+    .hero p {
+        animation: fadeInUp 1s ease-out 0.3s backwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ============================================
+       BOOK CARDS - Stagger Entrance & 3D Effect
+       ============================================ */
+    .book-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        perspective: 1000px;
+    }
+
+    .book-card {
+        animation: cardFlyIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform-style: preserve-3d;
+    }
+
+    .book-card:nth-child(1) { animation-delay: 0.1s; }
+    .book-card:nth-child(2) { animation-delay: 0.2s; }
+    .book-card:nth-child(3) { animation-delay: 0.3s; }
+    .book-card:nth-child(4) { animation-delay: 0.4s; }
+    .book-card:nth-child(5) { animation-delay: 0.5s; }
+    .book-card:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes cardFlyIn {
+        0% {
+            opacity: 0;
+            transform: translateY(50px) rotateX(-30deg) scale(0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) rotateX(0) scale(1);
+        }
+    }
+
+    .book-card:active {
+        transform: scale(0.95) translateZ(-20px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation: cardPress 0.2s ease-out;
+    }
+
+    @keyframes cardPress {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(0.95);
+        }
+        100% {
+            transform: scale(0.98);
+        }
+    }
+
+    /* Book Image Zoom on Tap */
+    .book-image {
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .book-card:active .book-image {
+        transform: scale(1.1) rotate(2deg);
+    }
+
+    /* Badge Animation */
+    .book-badge, .stock-badge {
+        animation: badgeFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes badgeFloat {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-5px) rotate(5deg);
+        }
+    }
+
+    /* ============================================
+       BUTTONS - Ripple & Bounce Effect
+       ============================================ */
+    .btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:active::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+    }
+
+    .btn-primary:active {
+        animation: buttonShake 0.3s ease-out;
+    }
+
+    @keyframes buttonShake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    /* ============================================
+       QUANTITY CONTROL - Interactive Animation
+       ============================================ */
+    .quantity-control {
+        transition: all 0.3s ease;
+    }
+
+    .qty-btn {
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .qty-btn:active {
+        transform: scale(0.8) rotate(180deg);
+        animation: quantityPulse 0.3s ease-out;
+    }
+
+    @keyframes quantityPulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(139, 111, 71, 0.7);
+        }
+        100% {
+            box-shadow: 0 0 0 20px rgba(139, 111, 71, 0);
+        }
+    }
+
+    .qty-display {
+        animation: numberJump 0.3s ease-out;
+    }
+
+    @keyframes numberJump {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.3);
+        }
+    }
+
+    /* ============================================
+       SECTION TITLES - Slide & Underline Animation
+       ============================================ */
+    .section-title {
+        animation: titleSlideIn 0.8s ease-out;
+        position: relative;
+    }
+
+    @keyframes titleSlideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .section-title::after {
+        animation: underlineExpand 1s ease-out 0.5s backwards;
+    }
+
+    @keyframes underlineExpand {
+        from {
+            width: 0;
+        }
+        to {
+            width: 60%;
+        }
+    }
+
+    /* ============================================
+       ABOUT SECTION - Parallax Effect
+       ============================================ */
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .about-text {
+        animation: fadeInLeft 0.8s ease-out;
+    }
+
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .about-image {
+        animation: fadeInRight 0.8s ease-out 0.3s backwards;
+    }
+
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .about-image img {
+        transition: transform 0.5s ease;
+    }
+
+    .about-image:active img {
+        transform: scale(1.05) rotate(2deg);
+    }
+
+    /* ============================================
+       GALLERY - Masonry & Zoom Animation
+       ============================================ */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .gallery-item {
+        animation: galleryFadeIn 0.6s ease-out backwards;
+        height: 200px;
+    }
+
+    .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes galleryFadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .gallery-item:active {
+        transform: scale(0.95);
+        animation: photoFlash 0.5s ease-out;
+    }
+
+    @keyframes photoFlash {
+        0%, 100% {
+            filter: brightness(1);
+        }
+        50% {
+            filter: brightness(1.3);
+        }
+    }
+
+    /* ============================================
+       CONTACT FORM - Input Focus Animation
+       ============================================ */
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(193, 122, 74, 0.4);
+        animation: inputGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes inputGlow {
+        0%, 100% {
+            box-shadow: 0 0 10px rgba(193, 122, 74, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 25px rgba(193, 122, 74, 0.6);
+        }
+    }
+
+    /* ============================================
+       BACK TO TOP - Rotate & Bounce
+       ============================================ */
+    .back-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .back-to-top.visible {
+        animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes bounceIn {
+        0% {
+            opacity: 0;
+            transform: scale(0) rotate(-180deg);
+        }
+        50% {
+            transform: scale(1.2) rotate(20deg);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) rotate(0);
+        }
+    }
+
+    .back-to-top:active {
+        transform: scale(0.8) rotate(360deg);
+    }
+
+    /* ============================================
+       MODAL - Slide Up & Blur Background
+       ============================================ */
+    .modal {
+        padding: 20px;
+    }
+
+    .modal-content {
+        max-height: 85vh;
+        margin: 0;
+        animation: modalSlideUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes modalSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(100%) scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .book-detail-content {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .modal-close {
+        animation: closeButtonSpin 0.5s ease-out;
+    }
+
+    @keyframes closeButtonSpin {
+        from {
+            transform: rotate(-180deg) scale(0);
+        }
+        to {
+            transform: rotate(0) scale(1);
+        }
+    }
+
+    .modal-close:active {
+        transform: rotate(90deg) scale(0.8);
+    }
+
+    /* ============================================
+       FOOTER - Fade In Bottom
+       ============================================ */
+    footer {
+        animation: fadeInBottom 0.8s ease-out;
+    }
+
+    @keyframes fadeInBottom {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ============================================
+       LOADING STATES - Skeleton Animation
+       ============================================ */
+    .loading {
+        background: linear-gradient(
+            90deg,
+            var(--bg-cream) 0%,
+            var(--secondary) 50%,
+            var(--bg-cream) 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0;
+        }
+        100% {
+            background-position: 200% 0;
+        }
+    }
+
+    /* ============================================
+       SWIPE GESTURES - Visual Feedback
+       ============================================ */
+    .swipeable {
+        transition: transform 0.3s ease-out;
+    }
+
+    .swipeable.swiping-left {
+        transform: translateX(-20px);
+        opacity: 0.7;
+    }
+
+    .swipeable.swiping-right {
+        transform: translateX(20px);
+        opacity: 0.7;
+    }
+
+    /* ============================================
+       TOUCH FEEDBACK - Material Ripple
+       ============================================ */
+    .ripple-effect {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ripple-effect::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s, opacity 0.6s;
+        opacity: 0;
+    }
+
+    .ripple-effect:active::after {
+        width: 200px;
+        height: 200px;
+        opacity: 1;
+        transition: 0s;
+    }
+
+    /* ============================================
+       SCROLL REVEAL - Fade In on Scroll
+       ============================================ */
+    .reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+    }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ============================================
+       NOTIFICATION TOAST - Slide In
+       ============================================ */
+    .toast-notification {
+        position: fixed;
+        top: 80px;
+        right: -300px;
+        background: var(--primary-dark);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .toast-notification.show {
+        right: 20px;
+        animation: toastBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes toastBounce {
+        0% {
+            right: -300px;
+        }
+        60% {
+            right: 30px;
+        }
+        100% {
+            right: 20px;
+        }
+    }
+
+    /* ============================================
+       PRICE TAG - Wiggle Animation
+       ============================================ */
+    .book-price, .item-price, .summary-value {
+        animation: priceWiggle 2s ease-in-out infinite;
+    }
+
+    @keyframes priceWiggle {
+        0%, 100% {
+            transform: rotate(0deg);
+        }
+        25% {
+            transform: rotate(2deg);
+        }
+        75% {
+            transform: rotate(-2deg);
+        }
+    }
+
+    /* ============================================
+       STAR RATING - Twinkle Effect
+       ============================================ */
+    .stars {
+        display: inline-block;
+        animation: starTwinkle 2s ease-in-out infinite;
+    }
+
+    @keyframes starTwinkle {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.7;
+        }
+    }
+
+    /* ============================================
+       CHECKOUT PAGE ANIMATIONS
+       ============================================ */
+    .cart-item {
+        animation: cartItemSlide 0.5s ease-out backwards;
+    }
+
+    .cart-item:nth-child(1) { animation-delay: 0.1s; }
+    .cart-item:nth-child(2) { animation-delay: 0.2s; }
+    .cart-item:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes cartItemSlide {
+        from {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .summary-section {
+        animation: summaryFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes summaryFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    /* ============================================
+       PERFORMANCE OPTIMIZATIONS
+       ============================================ */
+    * {
+        will-change: transform;
+    }
+
+    .book-card,
+    .btn,
+    .icon-btn,
+    .filter-btn {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+
+}
+
+/* ============================================
+   EXTRA SMALL MOBILE (< 480px)
+   ============================================ */
+@media (max-width: 480px) {
+    .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+}
