@@ -11,7 +11,7 @@ const booksData = [
         isRare: false,
         rating: 4.8,
         reviews: 1250,
-        image: "foto buku/Sampul_Buku_Komik_Dilan_1990.jpeg",
+        image: "foto buku/dilan.jpg",
         condition: "Bekas - Sangat Baik",
         description: "Novel romantis yang menceritakan kisah cinta masa SMA di Bandung tahun 1990. Mengisahkan Dilan, seorang siswa SMA yang jatuh cinta pada Milea dengan cara yang unik dan puitis.",
         synopsis: "Dilan 1990 adalah novel yang mengisahkan pertemuan dan jatuh cintanya Dilan dengan Milea. Dengan setting tahun 1990 di Bandung, novel ini penuh dengan dialog-dialog romantis khas remaja yang membuat pembaca bernostalgia dengan masa SMA.",
